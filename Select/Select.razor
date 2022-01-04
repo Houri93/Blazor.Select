@@ -1,0 +1,34 @@
+﻿@typeparam DataType
+@{
+    var filteredItemsArr = FilteredItems.ToArray();
+}
+
+<div class="select" @onclick="SelectClicked">
+
+    <input class="filter" type="text" @bind-value="FilterText" @bind-value:event="oninput" />
+
+    <div class="option">
+        @for (var idx = 0; idx < Values.Count; idx++)
+        {
+            var i = idx;
+            var v = Values[i];
+
+            @if (!filteredItemsArr.Contains(v))
+            {
+                continue;
+            }
+
+            <div class="option" @onclick="() => OptionClicked(i, v)">
+                @if (Template is null)
+                {
+                    @v?.ToString()
+                }
+                else
+                {
+                    @Template(v)
+                }
+            </div>
+        }
+    </div>
+
+</div>
