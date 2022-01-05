@@ -35,8 +35,22 @@ public partial class Select<DataType>
     [Parameter]
     public bool Open { get; set; }
 
+    protected override void OnInitialized()
+    {
+        if (SelectedValue is null || SelectedValue.Equals(default(DataType)))
+        {
+            SelectedValue = Values.FirstOrDefault();
+        }
+
+        base.OnInitialized();
+    }
+
     private void SelectClicked()
     {
+        if (Open)
+        {
+            return;
+        }
         Open = !Open;
         OnClick?.Invoke(this);
     }
@@ -47,4 +61,5 @@ public partial class Select<DataType>
 
         OptionOnClick?.Invoke(this, i, value);
     }
+
 }

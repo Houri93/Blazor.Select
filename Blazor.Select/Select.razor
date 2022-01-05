@@ -3,13 +3,23 @@
     var filteredItemsArr = FilteredItems.ToArray();
 }
 
-<p></p>
-<input class="filter" type="text" @bind-value="FilterText" @bind-value:event="oninput" />
-
 <div class="select" @onclick="SelectClicked">
+    <span>
+        @if (Template is not null)
+        {
+            @Template(SelectedValue)
+            
+        }
+        else
+        {
+            @SelectedValue?.ToString()            
+        }
+    </span>
 
     @if (Open)
     {
+        <input class="filter hide" type="text" @bind-value="FilterText" @bind-value:event="oninput" />
+
         <div>
             @for (var idx = 0; idx < Values.Count; idx++)
             {
@@ -22,20 +32,16 @@
                 }
 
                 <div class="option @(i == SelectedIndex ? "selected" : string.Empty)" @onclick="() => OptionClicked(i, v)">
-                    @if (Template is null)
+                    @if (Template is not null)
                     {
-                        @v?.ToString()
+                        @Template(v)                        
                     }
                     else
                     {
-                        @Template(v)
+                        @v?.ToString()                        
                     }
                 </div>
             }
         </div>
-    }
-    else
-    {
-
     }
 </div>
