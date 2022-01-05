@@ -10,7 +10,12 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-<label>String</label>
-<Select Values="strings">
-
+<label>Select</label>
+<Select Values="values">
+    <Template>
+        <img src="https://picsum.photos/200" />
+        <span>
+            @context
+        </span>
+    </Template>
 </Select>
