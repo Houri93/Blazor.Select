@@ -3,45 +3,51 @@
     var filteredItemsArr = FilteredItems.ToArray();
 }
 
-<div class="select" @onclick="SelectClicked">
-    <span>
-        @if (Template is not null)
-        {
-            @Template(SelectedValue)
-            
-        }
-        else
-        {
-            @SelectedValue?.ToString()            
-        }
-    </span>
-
-    @if (Open)
-    {
-        <input class="filter hide" type="text" @bind-value="FilterText" @bind-value:event="oninput" />
-
-        <div>
-            @for (var idx = 0; idx < Values.Count; idx++)
+<div>
+    <div @onclick="SelectClicked">
+        <span>
+            @if (Template is not null)
             {
-                var i = idx;
-                var v = Values[i];
+                @Template(SelectedValue)
 
-                @if (!filteredItemsArr.Contains(v))
-                {
-                    continue;
-                }
-
-                <div class="option @(i == SelectedIndex ? "selected" : string.Empty)" @onclick="() => OptionClicked(i, v)">
-                    @if (Template is not null)
-                    {
-                        @Template(v)                        
-                    }
-                    else
-                    {
-                        @v?.ToString()                        
-                    }
-                </div>
             }
-        </div>
-    }
+            else
+            {
+                @SelectedValue?.ToString()
+            }
+        </span>
+    </div>
+
+    <div>
+        @if (Open)
+        {
+            <input type="text" @bind-value="FilterText" @bind-value:event="oninput" />
+
+            <div>
+                @for (var idx = 0; idx < Values.Count; idx++)
+                {
+                    var i = idx;
+                    var v = Values[i];
+
+                    @if (!filteredItemsArr.Contains(v))
+                    {
+                        continue;
+                    }
+
+                    <div class="option @(i == SelectedIndex ? "selected" : string.Empty)" @onclick="() => OptionClicked(i, v)">
+                        @if (Template is not null)
+                        {
+                            @Template(v)
+                        }
+                        else
+                        {
+                            @v?.ToString()
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
 </div>
+

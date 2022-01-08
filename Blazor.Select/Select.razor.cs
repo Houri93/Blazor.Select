@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Components;
 
+using System.Linq.Expressions;
+
 namespace Blazor.Select;
 
 public partial class Select<DataType>
@@ -42,15 +44,13 @@ public partial class Select<DataType>
             SelectedValue = Values.FirstOrDefault();
         }
 
+        SelectedIndex = Values.IndexOf(SelectedValue);
+
         base.OnInitialized();
     }
 
     private void SelectClicked()
     {
-        if (Open)
-        {
-            return;
-        }
         Open = !Open;
         OnClick?.Invoke(this);
     }
@@ -58,7 +58,7 @@ public partial class Select<DataType>
     {
         SelectedValue = value;
         SelectedIndex = i;
-
+        Open = false;
         OptionOnClick?.Invoke(this, i, value);
     }
 
